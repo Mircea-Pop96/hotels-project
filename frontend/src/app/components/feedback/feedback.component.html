@@ -1,0 +1,46 @@
+<h1>Feedbacks</h1>
+<ul>
+  <li *ngFor="let feedback of feedbacks">
+    <p>User: {{ feedback.user }}</p>
+    <p>Services: {{ feedback.services }}</p>
+    <p>Cleanliness: {{ feedback.cleanliness }}</p>
+    <p>Comments: {{ feedback.comments }}</p>
+    <p>Feedback Time: {{ feedback.feedbackTime | date : "short" }}</p>
+  </li>
+</ul>
+
+<h2>Add Feedback</h2>
+<form (ngSubmit)="addFeedback()">
+  <div>
+    <label for="user">User:</label>
+    <input id="user" [(ngModel)]="newFeedback.user" name="user" required />
+  </div>
+  <div>
+    <label for="services">Services:</label>
+    <input
+      id="services"
+      [(ngModel)]="newFeedback.services"
+      name="services"
+      required
+    />
+  </div>
+  <div>
+    <label for="cleanliness">Cleanliness:</label>
+    <input
+      id="cleanliness"
+      [(ngModel)]="newFeedback.cleanliness"
+      name="cleanliness"
+      required
+    />
+  </div>
+  <div>
+    <label for="comments">Comments:</label>
+    <input
+      id="comments"
+      [(ngModel)]="newFeedback.comments"
+      name="comments"
+      required
+    />
+  </div>
+  <button type="submit">Add Feedback</button>
+</form>

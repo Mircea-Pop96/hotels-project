@@ -1,0 +1,22 @@
+<div class="container mt-4">
+  <h2>Add Feedback</h2>
+  <form #feedbackForm="ngForm" (ngSubmit)="addFeedback(feedbackForm)">
+    <div class="mb-3">
+      <label for="user" class="form-label">User:</label>
+      <input id="user" [(ngModel)]="newFeedback.user" name="user" class="form-control" required>
+    </div>
+    <div class="mb-3">
+      <label for="services" class="form-label">Services:</label>
+      <input id="services" [(ngModel)]="newFeedback.services" name="services" class="form-control" required>
+    </div>
+    <div class="mb-3">
+      <label for="cleanliness" class="form-label">Cleanliness:</label>
+      <input id="cleanliness" [(ngModel)]="newFeedback.cleanliness" name="cleanliness" class="form-control" required>
+    </div>
+    <div class="mb-3">
+      <label for="comments" class="form-label">Comments:</label>
+      <input id="comments" [(ngModel)]="newFeedback.comments" name="comments" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="feedbackForm.form.invalid">Add Feedback</button>
+  </form>
+</div>

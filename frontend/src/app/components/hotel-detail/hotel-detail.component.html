@@ -1,0 +1,65 @@
+<div class="container mt-4" *ngIf="hotel">
+  <h2>{{ hotel.name }}</h2>
+  <p>Latitude: {{ hotel.latitude }}</p>
+  <p>Longitude: {{ hotel.longitude }}</p>
+
+  <h3>Rooms</h3>
+  <ul class="list-group mb-4">
+    <li *ngFor="let room of hotel.rooms" class="list-group-item">
+      <input type="checkbox"
+             [disabled]="!room.isAvailable || (currentRoomToChange && currentRoomToChange.id !== room.id)"
+             (change)="toggleRoomSelection(room)"
+             [checked]="isRoomSelected(room)">
+      Room {{ room.roomNumber }} - {{ room.type }} - {{ room.price | currency }}
+      <span *ngIf="room.isAvailable" class="badge bg-success">Available</span>
+      <span *ngIf="!room.isAvailable" class="badge bg-secondary">Not Available</span>
+      <div class="mt-2" *ngIf="!room.isAvailable && !currentRoomToChange">
+        <button class="btn btn-warning btn-sm" (click)="cancelBooking(room)">Cancel Booking</button>
+        <button class="btn btn-info btn-sm ml-2" (click)="initiateChangeBooking(room)">Change Booking</button>
+      </div>
+      <div class="mt-2" *ngIf="currentRoomToChange && currentRoomToChange.id === room.id">
+        <button class="btn btn-danger btn-sm" (click)="currentRoomToChange = null">Cancel Change</button>
+      </div>
+    </li>
+  </ul>
+
+  <div *ngIf="currentRoomToChange">
+    <h3>Select a new room for Room {{ currentRoomToChange.roomNumber }}</h3>
+    <ul class="list-group mb-4">
+      <li *ngFor="let room of hotel.rooms" class="list-group-item">
+        <input type="radio"
+               name="newRoom"
+               [disabled]="!room.isAvailable"
+               (change)="confirmChangeBooking(room)">
+        Room {{ room.roomNumber }} - {{ room.type }} - {{ room.price | currency }}
+        <span *ngIf="room.isAvailable" class="badge bg-success">Available</span>
+        <span *ngIf="!room.isAvailable" class="badge bg-secondary">Not Available</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="mb-4">
+    <label for="checkInTime" class="form-label">Check-In Time:</label>
+    <input id="checkInTime" [(ngModel)]="checkInTime" name="checkInTime" type="datetime-local" class="form-control" required>
+
+    <label for="checkOutTime" class="form-label mt-3">Check-Out Time:</label>
+    <input id="checkOutTime" [(ngModel)]="checkOutTime" name="checkOutTime" type="datetime-local" class="form-control" required>
+  </div>
+
+  <button class="btn btn-primary" (click)="bookRooms()" [disabled]="!canBookRooms()">Book Selected Rooms</button>
+
+  <h3 class="mt-5">Feedbacks</h3>
+  <ul class="list-group mb-4">
+    <li *ngFor="let feedback of feedbacks" class="list-group-item">
+      <p><strong>User:</strong> {{ feedback.user }}</p>
+      <p><strong>Services:</strong> {{ feedback.services }}</p>
+      <p><strong>Cleanliness:</strong> {{ feedback.cleanliness }}</p>
+      <p><strong>Comments:</strong> {{ feedback.comments }}</p>
+      <p><strong>Feedback Time:</strong> {{ feedback.feedbackTime | date:'short' }}</p>
+    </li>
+  </ul>
+
+  <button class="btn btn-primary" (click)="goToFeedbackForm()">
+    Leave Feedback
+  </button>
+</div>
